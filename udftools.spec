@@ -8,6 +8,8 @@ Group:		Applications/System
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/linux-udf/%{name}-%{version}.tar.gz
 Patch0:		%{name}-acam.patch
 URL:		http://linux-udf.sourceforge.net/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -37,7 +39,7 @@ udftools - pliki biblioteki.
 %patch0 -p1
 
 %build
-aclocal
+%{__aclocal}
 %{__autoconf}
 autoheader
 %{__automake}
