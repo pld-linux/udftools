@@ -6,6 +6,7 @@ Release:	0.1
 License:	GPL
 Group:		Applications/System
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/linux-udf/%{name}-%{version}.tar.gz
+Patch0:		%{name}-acam.patch
 URL:		http://linux-udf.sourceforge.net
 Conflicts:	kernel < 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -34,6 +35,7 @@ udftools - pliki biblioteki.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 aclocal
