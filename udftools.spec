@@ -6,7 +6,7 @@ Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-udf/%{name}-%{version}.tar.gz
-# Source0-md5: e1fe1e18d31512f343f215ef2379ad0c
+# Source0-md5:	e1fe1e18d31512f343f215ef2379ad0c
 Patch0:		%{name}-acam.patch
 URL:		http://linux-udf.sourceforge.net/
 BuildRequires:	autoconf
