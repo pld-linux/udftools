@@ -2,14 +2,14 @@ Summary:	UDF writing tools for CDRW recorders
 Summary(pl):	Narzêdzia umo¿liwaj±ce zapisywanie na nagrywarkach w formacie UDF
 Name:		udftools
 Version:	1.0.0b2
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/linux-udf/%{name}-%{version}.tar.gz
 Patch0:		%{name}-acam.patch
 URL:		http://linux-udf.sourceforge.net
-Conflicts:	kernel < 2.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Requires:	kernel(cdrw)
 
 %description
 This package allows to use CDRW disks like a normal floppy disks.
