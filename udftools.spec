@@ -41,7 +41,7 @@ udftools - pliki biblioteki.
 %build
 %{__aclocal}
 %{__autoconf}
-autoheader
+%{__autoheader}
 %{__automake}
 %configure
 %{__make}
