@@ -7,9 +7,8 @@ License:	GPL
 Group:		Applications/System
 Source0:	http://belnet.dl.sourceforge.net/sourceforge/linux-udf/%{name}-%{version}.tar.gz
 Patch0:		%{name}-acam.patch
-URL:		http://linux-udf.sourceforge.net
+URL:		http://linux-udf.sourceforge.net/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Requires:	kernel(cdrw)
 
 %description
 This package allows to use CDRW disks like a normal floppy disks.
@@ -17,9 +16,9 @@ The data can modified and deleted. Disks can be read in any UDF
 compatibile system.
 
 %description -l pl
-Ten pakiet umo¿liwia nagrywanie na dyskach CDRW jak na normalnych dyskietkach.
-Dane mo¿na usuwaæ i modyfikowaæ. Odczyt jest mo¿liwy na systemach
-obs³uguj±cych system UDF.
+Ten pakiet umo¿liwia nagrywanie na dyskach CDRW jak na normalnych
+dyskietkach. Dane mo¿na usuwaæ i modyfikowaæ. Odczyt jest mo¿liwy na
+systemach obs³uguj±cych system UDF.
 
 %package devel
 Summary:	udftools - library files
@@ -53,14 +52,6 @@ install -d $RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%pre
-
-%preun
-
-%post
-
-%postun
 
 %files
 %defattr(644,root,root,755)
