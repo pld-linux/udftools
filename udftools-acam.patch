@@ -8,7 +8,7 @@ diff -uNr udftools-1.0.0b2/configure.in udftools-1.0.0b2.new/configure.in
 -AC_SUBST(LIBOBJS)
 -AC_CHECK_FUNCS(getopt_long , , [LIBOBJS="$LIBOBJS getopt.lo"] )
 +
-+AC_CHECK_FUNCS(getopt_long , , AC_LIBOBJ([getopt]) )
++AC_CHECK_FUNCS(getopt_long , , [AC_LIBOBJ([getopt])] )
  
  AC_OUTPUT(Makefile libudffs/Makefile mkudffs/Makefile cdrwtool/Makefile pktsetup/Makefile doc/Makefile)
 diff -uNr udftools-1.0.0b2/libudffs/Makefile.am udftools-1.0.0b2.new/libudffs/Makefile.am
