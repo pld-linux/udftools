@@ -1,5 +1,5 @@
 Summary:	UDF writing tools for CDRW recorders
-Summary(pl):	Narzêdzia umo¿liwaj±ce zapisywanie na p³ytach CDRW w formacie UDF
+Summary(pl):	Narzêdzia umo¿liwiaj±ce zapisywanie na p³ytach CDRW w formacie UDF
 Name:		udftools
 Version:	1.0.0b2
 Release:	2
