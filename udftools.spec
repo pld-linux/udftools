@@ -2,12 +2,13 @@ Summary:	UDF writing tools for CDRW recorders
 Summary(pl):	Narzêdzia umo¿liwiaj±ce zapisywanie na p³ytach CDRW w formacie UDF
 Name:		udftools
 Version:	1.0.0b2
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-udf/%{name}-%{version}.tar.gz
 # Source0-md5:	e1fe1e18d31512f343f215ef2379ad0c
 Patch0:		%{name}-acam.patch
+Patch1:		%{name}-pktcdvd.patch
 URL:		http://linux-udf.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -51,6 +52,7 @@ Statyczna biblioteka libudffs.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
