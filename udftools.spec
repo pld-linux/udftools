@@ -1,18 +1,19 @@
 Summary:	UDF writing tools for CDRW recorders
 Summary(pl):	Narzêdzia umo¿liwiaj±ce zapisywanie na p³ytach CDRW w formacie UDF
 Name:		udftools
-Version:	1.0.0b2
-Release:	3
+Version:	1.0.0b3
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-udf/%{name}-%{version}.tar.gz
-# Source0-md5:	e1fe1e18d31512f343f215ef2379ad0c
-Patch0:		%{name}-acam.patch
+# Source0-md5:	2f491ddd63f31040797236fe18db9e60
+Patch0:		%{name}-cvs.patch
 Patch1:		%{name}-pktcdvd.patch
 URL:		http://linux-udf.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	libtool
+BuildRequires:	readline-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -29,7 +30,7 @@ systemach obs³uguj±cych system plików UDF.
 Summary:	udftools - libudffs header files
 Summary(pl):	udftools - pliki nag³ówkowe dla libudffs
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 udftools - libudffs header files.
@@ -41,7 +42,7 @@ udftools - pliki nag³ówkowe dla libudffs.
 Summary:	Static libudffs library
 Summary(pl):	Statyczna biblioteka libudffs
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static libudffs library.
@@ -71,7 +72,7 @@ install -d $RPM_BUILD_ROOT%{_includedir}/udffs
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install include/{config,defaults,ecma_167r3,libudffs,osta_udf201,udf_endian}.h \
+install include/{bswap,config,defaults,ecma_167,libudffs,osta_udf,udf_endian,udf_lib}.h \
 	$RPM_BUILD_ROOT%{_includedir}/udffs
 
 %clean
@@ -84,16 +85,16 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libudffs.so.*.*
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/libudffs.so
+%{_libdir}/libudffs.la
 %{_includedir}/udffs
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libudffs.a
