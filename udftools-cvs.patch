@@ -1,0 +1,330 @@
+diff -Nur -x CVS udftools-1.0.0b3/cdrwtool/defaults.c udftools/cdrwtool/defaults.c
+--- udftools-1.0.0b3/cdrwtool/defaults.c	2002-11-26 08:18:50.000000000 +0100
++++ udftools/cdrwtool/defaults.c	2004-02-27 00:46:22.000000000 +0100
+@@ -164,7 +164,7 @@
+ 		charSetInfo : UDF_CHAR_SET_INFO
+ 	},
+ 	logicalVolIdent : "\x08" "LinuxUDF",
+-	LVInfo1 : "\x08" "Linux mkudffs " MKUDFFS_VERSION,
++	LVInfo1 : "\x08" "Linux mkudffs " PACKAGE_VERSION,
+ 	LVInfo2 : "\x08" "Linux UDF " UDFFS_VERSION " (" UDFFS_DATE ")",
+ 	LVInfo3 : "\x08" EMAIL_STRING,
+ 	impIdent :
+diff -Nur -x CVS udftools-1.0.0b3/cdrwtool/Makefile.am udftools/cdrwtool/Makefile.am
+--- udftools-1.0.0b3/cdrwtool/Makefile.am	2002-11-26 08:18:50.000000000 +0100
++++ udftools/cdrwtool/Makefile.am	2004-02-27 00:45:50.000000000 +0100
+@@ -2,4 +2,4 @@
+ cdrwtool_LDADD = $(top_builddir)/libudffs/libudffs.la
+ cdrwtool_SOURCES = main.c options.c cdrwtool.c defaults.c ../mkudffs/mkudffs.c options.h cdrwtool.h ../include/ecma_167.h ../include/osta_udf.h ../mkudffs/mkudffs.h ../include/libudffs.h ../include/defaults.h ../include/udf_endian.h
+ 
+-AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
++AM_CPPFLAGS = -I$(top_srcdir)/include -D_LARGEFILE64_SOURCE
+diff -Nur -x CVS udftools-1.0.0b3/configure.in udftools/configure.in
+--- udftools-1.0.0b3/configure.in	2003-10-24 03:52:14.000000000 +0200
++++ udftools/configure.in	2004-02-27 01:02:53.000000000 +0100
+@@ -1,8 +1,8 @@
+ dnl Process this file with autoconf to produce a configure script.
+-AC_INIT(mkudffs/mkudffs.c)
++AC_INIT(mkudffs, 1.0.0b3)
+ AC_CONFIG_AUX_DIR(config)
+ AM_CONFIG_HEADER(include/config.h:include/config.in)
+-AM_INIT_AUTOMAKE(udftools, 1.0.0b3)
++AM_INIT_AUTOMAKE
+ 
+ dnl Checks for programs.
+ AC_PROG_CC
+@@ -22,6 +22,9 @@
+ 
+ dnl Checks for library functions.
+ AC_CHECK_FUNCS(gettimeofday mktime open64 lseek64 llseek)
++AC_SUBST(LTLIBOBJS)
+ AC_CHECK_FUNCS([getopt_long],[],[AC_LIBOBJ([getopt])])
+ 
+-AC_OUTPUT(Makefile libudffs/Makefile mkudffs/Makefile cdrwtool/Makefile pktsetup/Makefile udffsck/Makefile wrudf/Makefile doc/Makefile udfct/Makefile)
++AC_CONFIG_FILES(Makefile libudffs/Makefile mkudffs/Makefile cdrwtool/Makefile pktsetup/Makefile udffsck/Makefile wrudf/Makefile doc/Makefile udfct/Makefile)
++
++AC_OUTPUT
+diff -Nur -x CVS udftools-1.0.0b3/libudffs/Makefile.am udftools/libudffs/Makefile.am
+--- udftools-1.0.0b3/libudffs/Makefile.am	2003-10-24 03:03:18.000000000 +0200
++++ udftools/libudffs/Makefile.am	2004-02-27 00:45:50.000000000 +0100
+@@ -3,4 +3,4 @@
+ libudffs_la_LIBADD = @LTLIBOBJS@
+ libudffs_la_LDFLAGS = -version-info 1:0:0
+ 
+-AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
++AM_CPPFLAGS = -I$(top_srcdir)/include -D_LARGEFILE64_SOURCE
+diff -Nur -x CVS udftools-1.0.0b3/mkudffs/defaults.c udftools/mkudffs/defaults.c
+--- udftools-1.0.0b3/mkudffs/defaults.c	2002-11-26 08:18:51.000000000 +0100
++++ udftools/mkudffs/defaults.c	2004-02-27 00:46:22.000000000 +0100
+@@ -171,7 +171,7 @@
+ 		charSetInfo : UDF_CHAR_SET_INFO
+ 	},
+ 	logicalVolIdent : "\x08" "LinuxUDF",
+-	LVInfo1 : "\x08" "Linux mkudffs " MKUDFFS_VERSION,
++	LVInfo1 : "\x08" "Linux mkudffs " PACKAGE_VERSION,
+ 	LVInfo2 : "\x08" "Linux UDF " UDFFS_VERSION " (" UDFFS_DATE ")",
+ 	LVInfo3 : "\x08" EMAIL_STRING,
+ 	impIdent :
+diff -Nur -x CVS udftools-1.0.0b3/mkudffs/Makefile.am udftools/mkudffs/Makefile.am
+--- udftools-1.0.0b3/mkudffs/Makefile.am	2002-11-26 08:18:51.000000000 +0100
++++ udftools/mkudffs/Makefile.am	2004-02-27 00:45:50.000000000 +0100
+@@ -2,4 +2,4 @@
+ mkudffs_LDADD = $(top_builddir)/libudffs/libudffs.la
+ mkudffs_SOURCES = main.c mkudffs.c defaults.c options.c mkudffs.h options.h ../include/ecma_167.h ../include/osta_udf.h ../include/libudffs.h ../include/defaults.h ../include/udf_endian.h ../include/bswap.h
+ 
+-AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
++AM_CPPFLAGS = -I$(top_srcdir)/include -D_LARGEFILE64_SOURCE
+diff -Nur -x CVS udftools-1.0.0b3/mkudffs/mkudffs.c udftools/mkudffs/mkudffs.c
+--- udftools-1.0.0b3/mkudffs/mkudffs.c	2004-02-23 04:35:33.000000000 +0100
++++ udftools/mkudffs/mkudffs.c	2004-03-02 03:09:39.000000000 +0100
+@@ -250,14 +250,14 @@
+ 	if (size % offsets[PSPACE_SIZE])
+ 		size -= (size % offsets[PSPACE_SIZE]);
+ 	set_extent(disc, PSPACE, start, size);
+-	for (i=0; i<disc->udf_lvd[0]->numPartitionMaps; i++)
++	for (i=0; i<le32_to_cpu(disc->udf_lvd[0]->numPartitionMaps); i++)
+ 	{
+ 		if (i == 1)
+ 			disc->udf_lvid->freeSpaceTable[i] = cpu_to_le32(0xFFFFFFFF);
+ 		else
+ 			disc->udf_lvid->freeSpaceTable[i] = cpu_to_le32(size);
+ 	}
+-	for (j=0; j<disc->udf_lvd[0]->numPartitionMaps; j++)
++	for (j=0; j<le32_to_cpu(disc->udf_lvd[0]->numPartitionMaps); j++)
+ 	{
+ 		if (j == 1)
+ 			disc->udf_lvid->sizeTable[i+j] = cpu_to_le32(0xFFFFFFFF);
+diff -Nur -x CVS udftools-1.0.0b3/mkudffs/mkudffs.h udftools/mkudffs/mkudffs.h
+--- udftools-1.0.0b3/mkudffs/mkudffs.h	2004-02-23 04:33:11.000000000 +0100
++++ udftools/mkudffs/mkudffs.h	2004-02-27 01:04:36.000000000 +0100
+@@ -30,11 +30,10 @@
+ 
+ #define CS0				0x00000001
+ #define UDF_ID_APPLICATION		"*Linux mkudffs"
+-#define MKUDFFS_VERSION			"1.0.0b2"
+ 
+ #define EMAIL_STRING			"<linux_udf@hpesjro.fc.hp.com>"
+ 
+-#define UDFFS_DATE			"2002/02/09"
++#define UDFFS_DATE			"2004/02/26"
+ #define UDFFS_VERSION			"1.0.0-cvs"
+ 
+ #define DEFAULT_HD	0
+diff -Nur -x CVS udftools-1.0.0b3/mkudffs/options.c udftools/mkudffs/options.c
+--- udftools-1.0.0b3/mkudffs/options.c	2002-11-26 08:18:51.000000000 +0100
++++ udftools/mkudffs/options.c	2004-02-27 00:46:22.000000000 +0100
+@@ -77,7 +77,7 @@
+ 		"\t--utf8\n"
+ 		"\t--bridge\n"
+ 		"\t--closed\n",
+-		MKUDFFS_VERSION, UDFFS_VERSION, UDFFS_DATE
++		PACKAGE_VERSION, UDFFS_VERSION, UDFFS_DATE
+ 	);
+ 	exit(1);
+ }
+diff -Nur -x CVS udftools-1.0.0b3/udffsck/defaults.c udftools/udffsck/defaults.c
+--- udftools-1.0.0b3/udffsck/defaults.c	1970-01-01 01:00:00.000000000 +0100
++++ udftools/udffsck/defaults.c	2004-02-27 01:02:53.000000000 +0100
+@@ -0,0 +1,88 @@
++/*
++ * defaults.c
++ *
++ * Copyright (c) 2001-2002  Ben Fennema <bfennema@falcon.csc.calpoly.edu>
++ * All rights reserved.
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
++ *
++ */
++
++#include "../mkudffs/mkudffs.h"
++
++struct fileEntry default_fe =
++{
++	descTag :
++	{
++		tagIdent : constant_cpu_to_le16(TAG_IDENT_LVID),
++		descVersion : constant_cpu_to_le16(3),
++		tagSerialNum : 1,
++		descCRC : constant_cpu_to_le16(sizeof(struct primaryVolDesc) - sizeof(tag)),
++	},
++	icbTag :
++	{
++		strategyType : constant_cpu_to_le16(4),
++		strategyParameter : constant_cpu_to_le16(0),
++		numEntries : constant_cpu_to_le16(1),
++		fileType : 0,
++		flags : constant_cpu_to_le16(ICBTAG_FLAG_AD_IN_ICB),
++	},
++	permissions : constant_cpu_to_le32(FE_PERM_U_DELETE|FE_PERM_U_CHATTR|FE_PERM_U_READ|FE_PERM_U_WRITE|FE_PERM_U_EXEC|FE_PERM_G_READ|FE_PERM_G_EXEC|FE_PERM_O_READ|FE_PERM_O_EXEC),
++	fileLinkCount : constant_cpu_to_le16(0),
++	informationLength : constant_cpu_to_le64(0),
++	logicalBlocksRecorded : constant_cpu_to_le64(0),
++	impIdent :
++	{
++		ident : UDF_ID_DEVELOPER,
++		identSuffix :
++		{
++			UDF_OS_CLASS_UNIX,
++			UDF_OS_ID_LINUX,
++		},
++	},
++};
++
++struct extendedFileEntry default_efe =
++{
++	descTag :
++	{
++		tagIdent : constant_cpu_to_le16(TAG_IDENT_LVID),
++		descVersion : constant_cpu_to_le16(3),
++		tagSerialNum : 1,
++		descCRC : constant_cpu_to_le16(sizeof(struct primaryVolDesc) - sizeof(tag)),
++	},
++	icbTag :
++	{
++		strategyType : constant_cpu_to_le16(4),
++		strategyParameter : constant_cpu_to_le16(0),
++		numEntries : constant_cpu_to_le16(1),
++		fileType : 0,
++		flags : constant_cpu_to_le16(ICBTAG_FLAG_AD_IN_ICB),
++	},
++	permissions : constant_cpu_to_le32(FE_PERM_U_DELETE|FE_PERM_U_CHATTR|FE_PERM_U_READ|FE_PERM_U_WRITE|FE_PERM_U_EXEC|FE_PERM_G_READ|FE_PERM_G_EXEC|FE_PERM_O_READ|FE_PERM_O_EXEC),
++	fileLinkCount : constant_cpu_to_le16(0),
++	informationLength : constant_cpu_to_le64(0),
++	objectSize : constant_cpu_to_le64(0),
++	logicalBlocksRecorded : constant_cpu_to_le64(0),
++	impIdent :
++	{
++		ident : UDF_ID_DEVELOPER,
++		identSuffix :
++		{
++			UDF_OS_CLASS_UNIX,
++			UDF_OS_ID_LINUX,
++		},
++	},
++};
+diff -Nur -x CVS udftools-1.0.0b3/udffsck/Makefile.am udftools/udffsck/Makefile.am
+--- udftools-1.0.0b3/udffsck/Makefile.am	2002-11-26 08:18:51.000000000 +0100
++++ udftools/udffsck/Makefile.am	2004-02-27 01:02:53.000000000 +0100
+@@ -1,5 +1,5 @@
+ bin_PROGRAMS = udffsck
+ udffsck_LDADD = $(top_builddir)/libudffs/libudffs.la
+-udffsck_SOURCES = main.c
++udffsck_SOURCES = main.c defaults.c
+ 
+-AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
++AM_CPPFLAGS = -I$(top_srcdir)/include -D_LARGEFILE64_SOURCE
+diff -Nur -x CVS udftools-1.0.0b3/wrudf/defaults.c udftools/wrudf/defaults.c
+--- udftools-1.0.0b3/wrudf/defaults.c	1970-01-01 01:00:00.000000000 +0100
++++ udftools/wrudf/defaults.c	2004-02-27 01:02:53.000000000 +0100
+@@ -0,0 +1,88 @@
++/*
++ * defaults.c
++ *
++ * Copyright (c) 2001-2002  Ben Fennema <bfennema@falcon.csc.calpoly.edu>
++ * All rights reserved.
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, write to the Free Software
++ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
++ *
++ */
++
++#include "../mkudffs/mkudffs.h"
++
++struct fileEntry default_fe =
++{
++	descTag :
++	{
++		tagIdent : constant_cpu_to_le16(TAG_IDENT_LVID),
++		descVersion : constant_cpu_to_le16(3),
++		tagSerialNum : 1,
++		descCRC : constant_cpu_to_le16(sizeof(struct primaryVolDesc) - sizeof(tag)),
++	},
++	icbTag :
++	{
++		strategyType : constant_cpu_to_le16(4),
++		strategyParameter : constant_cpu_to_le16(0),
++		numEntries : constant_cpu_to_le16(1),
++		fileType : 0,
++		flags : constant_cpu_to_le16(ICBTAG_FLAG_AD_IN_ICB),
++	},
++	permissions : constant_cpu_to_le32(FE_PERM_U_DELETE|FE_PERM_U_CHATTR|FE_PERM_U_READ|FE_PERM_U_WRITE|FE_PERM_U_EXEC|FE_PERM_G_READ|FE_PERM_G_EXEC|FE_PERM_O_READ|FE_PERM_O_EXEC),
++	fileLinkCount : constant_cpu_to_le16(0),
++	informationLength : constant_cpu_to_le64(0),
++	logicalBlocksRecorded : constant_cpu_to_le64(0),
++	impIdent :
++	{
++		ident : UDF_ID_DEVELOPER,
++		identSuffix :
++		{
++			UDF_OS_CLASS_UNIX,
++			UDF_OS_ID_LINUX,
++		},
++	},
++};
++
++struct extendedFileEntry default_efe =
++{
++	descTag :
++	{
++		tagIdent : constant_cpu_to_le16(TAG_IDENT_LVID),
++		descVersion : constant_cpu_to_le16(3),
++		tagSerialNum : 1,
++		descCRC : constant_cpu_to_le16(sizeof(struct primaryVolDesc) - sizeof(tag)),
++	},
++	icbTag :
++	{
++		strategyType : constant_cpu_to_le16(4),
++		strategyParameter : constant_cpu_to_le16(0),
++		numEntries : constant_cpu_to_le16(1),
++		fileType : 0,
++		flags : constant_cpu_to_le16(ICBTAG_FLAG_AD_IN_ICB),
++	},
++	permissions : constant_cpu_to_le32(FE_PERM_U_DELETE|FE_PERM_U_CHATTR|FE_PERM_U_READ|FE_PERM_U_WRITE|FE_PERM_U_EXEC|FE_PERM_G_READ|FE_PERM_G_EXEC|FE_PERM_O_READ|FE_PERM_O_EXEC),
++	fileLinkCount : constant_cpu_to_le16(0),
++	informationLength : constant_cpu_to_le64(0),
++	objectSize : constant_cpu_to_le64(0),
++	logicalBlocksRecorded : constant_cpu_to_le64(0),
++	impIdent :
++	{
++		ident : UDF_ID_DEVELOPER,
++		identSuffix :
++		{
++			UDF_OS_CLASS_UNIX,
++			UDF_OS_ID_LINUX,
++		},
++	},
++};
+diff -Nur -x CVS udftools-1.0.0b3/wrudf/Makefile.am udftools/wrudf/Makefile.am
+--- udftools-1.0.0b3/wrudf/Makefile.am	2002-11-26 08:18:51.000000000 +0100
++++ udftools/wrudf/Makefile.am	2004-02-27 01:02:53.000000000 +0100
+@@ -1,5 +1,5 @@
+ bin_PROGRAMS = wrudf
+ wrudf_LDADD = $(top_builddir)/libudffs/libudffs.la -lreadline -lncurses
+-wrudf_SOURCES = wrudf.c wrudf-cmnd.c wrudf-desc.c wrudf-cdrw.c wrudf-cdr.c ide-pc.c wrudf.h ide-pc.h ../include/ecma_167.h ../include/osta_udf.h ../include/bswap.h
++wrudf_SOURCES = wrudf.c defaults.c wrudf-cmnd.c wrudf-desc.c wrudf-cdrw.c wrudf-cdr.c ide-pc.c wrudf.h ide-pc.h ../include/ecma_167.h ../include/osta_udf.h ../include/bswap.h
+ 
+-AM_CPPFLAGS = -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DDEBUG
++AM_CPPFLAGS = -I$(top_srcdir)/include -D_LARGEFILE64_SOURCE -D_GNU_SOURCE -DDEBUG
