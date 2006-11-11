@@ -10,6 +10,7 @@ Source0:	http://dl.sourceforge.net/linux-udf/%{name}-%{version}.tar.gz
 Patch0:		%{name}-cvs.patch
 Patch1:		%{name}-pktcdvd.patch
 Patch2:		%{name}-gcc4.patch
+Patch3:		%{name}-warnings.patch
 URL:		http://linux-udf.sourceforge.net/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -18,6 +19,7 @@ BuildRequires:	readline-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
+%define		specflags	-Wall
 
 %description
 This package allows to use CDRW disks like a normal floppy disks. The
@@ -58,6 +60,7 @@ Statyczna biblioteka libudffs.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__libtoolize}
