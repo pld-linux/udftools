@@ -2,7 +2,7 @@ Summary:	UDF writing tools for CDRW recorders
 Summary(pl):	Narzêdzia umo¿liwiaj±ce zapisywanie na p³ytach CDRW w formacie UDF
 Name:		udftools
 Version:	1.0.0b3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-udf/%{name}-%{version}.tar.gz
@@ -16,9 +16,11 @@ BuildRequires:	libtool
 BuildRequires:	readline-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_sbindir	/sbin
+
 %description
-This package allows to use CDRW disks like a normal floppy disks.
-The data can modified and deleted. Disks can be read in any UDF
+This package allows to use CDRW disks like a normal floppy disks. The
+data can modified and deleted. Disks can be read in any UDF
 compatibile system.
 
 %description -l pl
@@ -67,13 +69,15 @@ Statyczna biblioteka libudffs.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_includedir}/udffs
+install -d $RPM_BUILD_ROOT{%{_includedir}/udffs,%{_sbindir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install include/{bswap,config,defaults,ecma_167,libudffs,osta_udf,udf_endian,udf_lib}.h \
 	$RPM_BUILD_ROOT%{_includedir}/udffs
+
+ln -s %{_bindir}/mkudffs $RPM_BUILD_ROOT%{_sbindir}/mkfs.udf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -84,7 +88,12 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/cdrwtool
+%attr(755,root,root) %{_bindir}/mkudffs
+%attr(755,root,root) %{_bindir}/pktsetup
+%attr(755,root,root) %{_bindir}/udffsck
+%attr(755,root,root) %{_bindir}/wrudf
+%attr(755,root,root) %{_sbindir}/mkfs.udf
 %attr(755,root,root) %{_libdir}/libudffs.so.*.*
 %{_mandir}/man1/*
 %{_mandir}/man8/*
