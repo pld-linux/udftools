@@ -1,0 +1,67 @@
+diff -Nur udftools-1.0.0b3.orig/cdrwtool/cdrwtool.h udftools-1.0.0b3.warnings/cdrwtool/cdrwtool.h
+--- udftools-1.0.0b3.orig/cdrwtool/cdrwtool.h	2002-11-26 07:18:50.000000000 +0000
++++ udftools-1.0.0b3.warnings/cdrwtool/cdrwtool.h	2006-11-11 18:30:28.000000000 +0000
+@@ -226,6 +226,7 @@
+ int read_track_info(int, track_info_t *, int);
+ int reserve_track(int, struct cdrw_disc *);
+ int close_track(int, unsigned int);
++int close_session(int, unsigned int);
+ int read_buffer_cap(int, struct cdrw_disc *);
+ int set_cd_speed(int, int);
+ void cdrom_close(int);
+diff -Nur udftools-1.0.0b3.orig/include/udf_endian.h udftools-1.0.0b3.warnings/include/udf_endian.h
+--- udftools-1.0.0b3.orig/include/udf_endian.h	2002-11-26 07:18:51.000000000 +0000
++++ udftools-1.0.0b3.warnings/include/udf_endian.h	2006-11-11 18:30:05.000000000 +0000
+@@ -24,6 +24,7 @@
+ #define __UDF_ENDIAN_H
+ 
+ #include "bswap.h"
++#include <string.h>
+ 
+ static inline lb_addr lelb_to_cpu(lb_addr in)
+ {
+diff -Nur udftools-1.0.0b3.orig/pktsetup/pktsetup.c udftools-1.0.0b3.warnings/pktsetup/pktsetup.c
+--- udftools-1.0.0b3.orig/pktsetup/pktsetup.c	2006-11-11 18:30:05.000000000 +0000
++++ udftools-1.0.0b3.warnings/pktsetup/pktsetup.c	2006-11-11 18:31:25.000000000 +0000
+@@ -25,6 +25,8 @@
+ #include <getopt.h>
+ #include <bits/types.h>
+ #include <sys/types.h>
++#include <string.h>
++#include <stdlib.h>
+ 
+ #include <linux/cdrom.h>
+ 
+diff -Nur udftools-1.0.0b3.orig/wrudf/ide-pc.c udftools-1.0.0b3.warnings/wrudf/ide-pc.c
+--- udftools-1.0.0b3.orig/wrudf/ide-pc.c	2002-11-26 07:18:51.000000000 +0000
++++ udftools-1.0.0b3.warnings/wrudf/ide-pc.c	2006-11-11 18:30:05.000000000 +0000
+@@ -26,6 +26,7 @@
+ #include <stdio.h>
+ #include <string.h>
+ #include <stdarg.h>
++#include <stdlib.h>		/* exit() */
+ #include <errno.h>
+ #include <sys/ioctl.h>
+ #include <sys/types.h>		/* for u_char etc. */
+diff -Nur udftools-1.0.0b3.orig/wrudf/wrudf-cdr.c udftools-1.0.0b3.warnings/wrudf/wrudf-cdr.c
+--- udftools-1.0.0b3.orig/wrudf/wrudf-cdr.c	2002-11-26 07:18:51.000000000 +0000
++++ udftools-1.0.0b3.warnings/wrudf/wrudf-cdr.c	2006-11-11 18:30:05.000000000 +0000
+@@ -6,6 +6,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
++#include <string.h>
+ #include "wrudf.h"
+ #include "ide-pc.h"
+ #include "bswap.h"
+diff -Nur udftools-1.0.0b3.orig/wrudf/wrudf-cdrw.c udftools-1.0.0b3.warnings/wrudf/wrudf-cdrw.c
+--- udftools-1.0.0b3.orig/wrudf/wrudf-cdrw.c	2002-11-26 07:18:51.000000000 +0000
++++ udftools-1.0.0b3.warnings/wrudf/wrudf-cdrw.c	2006-11-11 18:30:05.000000000 +0000
+@@ -31,6 +31,7 @@
+ #include <sys/stat.h>
+ #include <sys/ioctl.h>
+ #include <linux/cdrom.h>		/* for CDROM_DRIVE_STATUS  */
++#include <string.h>
+ 
+ #include "wrudf.h"
+ #include "ide-pc.h"
