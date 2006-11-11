@@ -6,7 +6,7 @@ diff -Nur udftools-1.0.0b3.orig/wrudf/wrudf.c udftools-1.0.0b3.gcc4/wrudf/wrudf.
  		virtualPartitionNum = i;
  	}
 -	(char*)spm += spm->partitionMapLength;
-+	spm = (((char*) spm) + spm->partitionMapLength);
++	spm = (struct sparablePartitionMap*)(((char*) spm) + spm->partitionMapLength);
      }
  
      if( medium == CDR ) {
