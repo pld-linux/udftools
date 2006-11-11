@@ -9,6 +9,7 @@ Source0:	http://dl.sourceforge.net/linux-udf/%{name}-%{version}.tar.gz
 # Source0-md5:	2f491ddd63f31040797236fe18db9e60
 Patch0:		%{name}-cvs.patch
 Patch1:		%{name}-pktcdvd.patch
+Patch2:		%{name}-gcc4.patch
 URL:		http://linux-udf.sourceforge.net/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -56,6 +57,7 @@ Statyczna biblioteka libudffs.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
