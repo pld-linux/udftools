@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	static_libs # don't build static libraries
+#
 Summary:	UDF writing tools for CDRW recorders
 Summary(pl):	Narzêdzia umo¿liwiaj±ce zapisywanie na p³ytach CDRW w formacie UDF
 Name:		udftools
@@ -11,6 +15,7 @@ Patch0:		%{name}-cvs.patch
 Patch1:		%{name}-pktcdvd.patch
 Patch2:		%{name}-gcc4.patch
 Patch3:		%{name}-warnings.patch
+Patch4:		%{name}-install_headers.patch
 URL:		http://linux-udf.sourceforge.net/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -61,6 +66,7 @@ Statyczna biblioteka libudffs.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__libtoolize}
@@ -69,18 +75,16 @@ Statyczna biblioteka libudffs.
 %{__autoheader}
 %{__automake}
 %configure \
-	--enable-shared
+	--enable-shared \
+	--enable-static=%{?with_static_libs:yes}%{!?with_static_libs:no}
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_includedir}/udffs,%{_sbindir}}
+install -d $RPM_BUILD_ROOT%{_sbindir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-install include/{bswap,config,defaults,ecma_167,libudffs,osta_udf,udf_endian,udf_lib}.h \
-	$RPM_BUILD_ROOT%{_includedir}/udffs
 
 ln -s %{_bindir}/mkudffs $RPM_BUILD_ROOT%{_sbindir}/mkfs.udf
 
@@ -99,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/udffsck
 %attr(755,root,root) %{_bindir}/wrudf
 %attr(755,root,root) %{_sbindir}/mkfs.udf
-%attr(755,root,root) %{_libdir}/libudffs.so.*.*
+%attr(755,root,root) %{_libdir}/libudffs.so.*.*.*
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 
@@ -109,6 +113,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libudffs.la
 %{_includedir}/udffs
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libudffs.a
+%endif
