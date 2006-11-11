@@ -1,0 +1,12 @@
+diff -Nur udftools-1.0.0b3.orig/wrudf/wrudf.c udftools-1.0.0b3.gcc4/wrudf/wrudf.c
+--- udftools-1.0.0b3.orig/wrudf/wrudf.c	2002-11-26 07:18:51.000000000 +0000
++++ udftools-1.0.0b3.gcc4/wrudf/wrudf.c	2006-11-11 17:56:14.000000000 +0000
+@@ -245,7 +245,7 @@
+ 	    } else if( strncmp( spm->partIdent.ident, UDF_ID_VIRTUAL, strlen(UDF_ID_VIRTUAL)) == 0 )
+ 		virtualPartitionNum = i;
+ 	}
+-	(char*)spm += spm->partitionMapLength;
++	spm = (((char*) spm) + spm->partitionMapLength);
+     }
+ 
+     if( medium == CDR ) {
