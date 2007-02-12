@@ -3,7 +3,7 @@
 %bcond_without	static_libs # don't build static libraries
 #
 Summary:	UDF writing tools for CDRW recorders
-Summary(pl.UTF-8):   Narzędzia umożliwiające zapisywanie na płytach CDRW w formacie UDF
+Summary(pl.UTF-8):	Narzędzia umożliwiające zapisywanie na płytach CDRW w formacie UDF
 Name:		udftools
 Version:	1.0.0b3
 Release:	2
@@ -38,7 +38,7 @@ systemach obsługujących system plików UDF.
 
 %package devel
 Summary:	udftools - libudffs header files
-Summary(pl.UTF-8):   udftools - pliki nagłówkowe dla libudffs
+Summary(pl.UTF-8):	udftools - pliki nagłówkowe dla libudffs
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -50,7 +50,7 @@ udftools - pliki nagłówkowe dla libudffs.
 
 %package static
 Summary:	Static libudffs library
-Summary(pl.UTF-8):   Statyczna biblioteka libudffs
+Summary(pl.UTF-8):	Statyczna biblioteka libudffs
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
