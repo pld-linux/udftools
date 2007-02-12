@@ -3,7 +3,7 @@
 %bcond_without	static_libs # don't build static libraries
 #
 Summary:	UDF writing tools for CDRW recorders
-Summary(pl):	Narzêdzia umo¿liwiaj±ce zapisywanie na p³ytach CDRW w formacie UDF
+Summary(pl.UTF-8):   NarzÄ™dzia umoÅ¼liwiajÄ…ce zapisywanie na pÅ‚ytach CDRW w formacie UDF
 Name:		udftools
 Version:	1.0.0b3
 Release:	2
@@ -31,33 +31,33 @@ This package allows to use CDRW disks like a normal floppy disks. The
 data can modified and deleted. Disks can be read in any UDF
 compatibile system.
 
-%description -l pl
-Ten pakiet umo¿liwia nagrywanie na dyskach CDRW jak na normalnych
-dyskietkach. Dane mo¿na usuwaæ i modyfikowaæ. Odczyt jest mo¿liwy na
-systemach obs³uguj±cych system plików UDF.
+%description -l pl.UTF-8
+Ten pakiet umoÅ¼liwia nagrywanie na dyskach CDRW jak na normalnych
+dyskietkach. Dane moÅ¼na usuwaÄ‡ i modyfikowaÄ‡. Odczyt jest moÅ¼liwy na
+systemach obsÅ‚ugujÄ…cych system plikÃ³w UDF.
 
 %package devel
 Summary:	udftools - libudffs header files
-Summary(pl):	udftools - pliki nag³ówkowe dla libudffs
+Summary(pl.UTF-8):   udftools - pliki nagÅ‚Ã³wkowe dla libudffs
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 udftools - libudffs header files.
 
-%description devel -l pl
-udftools - pliki nag³ówkowe dla libudffs.
+%description devel -l pl.UTF-8
+udftools - pliki nagÅ‚Ã³wkowe dla libudffs.
 
 %package static
 Summary:	Static libudffs library
-Summary(pl):	Statyczna biblioteka libudffs
+Summary(pl.UTF-8):   Statyczna biblioteka libudffs
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static libudffs library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka libudffs.
 
 %prep
