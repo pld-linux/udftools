@@ -16,6 +16,7 @@ Patch1:		%{name}-pktcdvd.patch
 Patch2:		%{name}-gcc4.patch
 Patch3:		%{name}-warnings.patch
 Patch4:		%{name}-install_headers.patch
+Patch5:		%{name}-missing-INT_MAX.patch
 URL:		http://linux-udf.sourceforge.net/
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -67,6 +68,7 @@ Statyczna biblioteka libudffs.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__libtoolize}
