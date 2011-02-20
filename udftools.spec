@@ -108,8 +108,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/wrudf
 %attr(755,root,root) %{_sbindir}/mkfs.udf
 %attr(755,root,root) %{_libdir}/libudffs.so.*.*.*
-%{_mandir}/man1/*
-%{_mandir}/man8/*
+%attr(755,root,root) %ghost %{_libdir}/libudffs.so.1
+%{_mandir}/man1/cdrwtool.1*
+%{_mandir}/man8/mkudffs.8*
+%{_mandir}/man8/pktsetup.8*
 
 %files devel
 %defattr(644,root,root,755)
