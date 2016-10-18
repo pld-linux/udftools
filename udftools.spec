@@ -6,7 +6,7 @@ Summary:	UDF writing tools for CDRW recorders
 Summary(pl.UTF-8):	Narzędzia umożliwiające zapisywanie na płytach CDRW w formacie UDF
 Name:		udftools
 Version:	1.0.0b3
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-udf/%{name}-%{version}.tar.gz
