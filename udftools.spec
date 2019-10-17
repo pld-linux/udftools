@@ -6,7 +6,7 @@ Summary:	Linux tools for UDF filesystems and DVD/CD-R(W) drives
 Summary(pl.UTF-8):	Linuksowe narzędzia do systemów plików UDF oraz nagrywarek DVD/CD-R(W)
 Name:		udftools
 Version:	1.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	https://github.com/pali/udftools/archive/%{version}/%{name}-%{version}.tar.gz
