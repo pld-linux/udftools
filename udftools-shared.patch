@@ -1,56 +1,59 @@
---- udftools-1.2/libudffs/Makefile.am.orig	2016-06-29 19:13:05.000000000 +0200
-+++ udftools-1.2/libudffs/Makefile.am	2016-10-26 21:15:22.510434891 +0200
-@@ -1,4 +1,4 @@
+--- udftools-2.3/libudffs/Makefile.am.orig	2024-11-20 20:00:46.474506309 +0100
++++ udftools-2.3/libudffs/Makefile.am	2024-11-20 20:25:07.696590189 +0100
+@@ -1,4 +1,5 @@
 -noinst_LTLIBRARIES     = libudffs.la
 +lib_LTLIBRARIES     = libudffs.la
- libudffs_la_SOURCES = crc.c extent.c unicode.c ../include/getopt.h ../include/libudffs.h ../include/ecma_167.h ../include/osta_udf.h ../include/defaults.h ../include/udf_endian.h ../include/bswap.h
++libudffs_la_LDFLAGS = -version-info 2:0:0
+ libudffs_la_SOURCES = crc.c extent.c misc.c unicode.c ../include/libudffs.h ../include/ecma_167.h ../include/osta_udf.h ../include/bswap.h
  libudffs_la_LIBADD = @LTLIBOBJS@
- libudffs_la_LDFLAGS = -version-info 1:0:0
+ 
 --- udftools-1.2/include/Makefile.am.orig	1970-01-01 01:00:00.000000000 +0100
 +++ udftools-1.2/include/Makefile.am	2016-10-26 21:47:12.357079752 +0200
 @@ -0,0 +1,4 @@
-+noinst_HEADERS = bswap.h udf_endian.h
++noinst_HEADERS = bswap.h
 +EXTRA_DIST = config.in
 +pkgincludedir = $(includedir)/udffs
-+pkginclude_HEADERS = ecma_167.h libudffs.h osta_udf.h udf_lib.h
---- udftools-1.2/include/libudffs.h.orig	2016-06-29 19:13:05.000000000 +0200
-+++ udftools-1.2/include/libudffs.h	2016-10-26 21:46:08.653747148 +0200
-@@ -30,7 +30,6 @@
++pkginclude_HEADERS = ecma_167.h libudffs.h osta_udf.h
+--- udftools-2.3/include/libudffs.h.orig	2024-11-20 20:00:46.477839624 +0100
++++ udftools-2.3/include/libudffs.h	2024-11-20 20:28:37.495453611 +0100
+@@ -33,7 +33,7 @@
  
  #include "ecma_167.h"
  #include "osta_udf.h"
--#include "udf_endian.h"
+-#include "bswap.h"
++#include <sys/types.h>
  
  #define FLAG_FREED_BITMAP		0x00000001
  #define FLAG_FREED_TABLE		0x00000002
---- udftools-1.2/Makefile.am.orig	2016-06-29 19:13:05.000000000 +0200
-+++ udftools-1.2/Makefile.am	2016-10-26 21:47:32.960412852 +0200
-@@ -1,2 +1,2 @@
--SUBDIRS = libudffs mkudffs cdrwtool pktsetup udffsck wrudf doc
-+SUBDIRS = libudffs mkudffs cdrwtool pktsetup udffsck wrudf doc include
+--- udftools-2.3/Makefile.am.orig	2024-11-20 20:00:46.481172940 +0100
++++ udftools-2.3/Makefile.am	2024-11-20 20:29:13.125260588 +0100
+@@ -1,3 +1,3 @@
+-SUBDIRS = libudffs mkudffs cdrwtool pktsetup udffsck udfinfo udflabel wrudf doc
++SUBDIRS = libudffs mkudffs cdrwtool pktsetup udffsck udfinfo udflabel wrudf doc include
  dist_doc_DATA = AUTHORS COPYING NEWS README
---- udftools-1.2/configure.ac.orig	2016-06-29 19:13:05.000000000 +0200
-+++ udftools-1.2/configure.ac	2016-10-27 05:46:53.953417785 +0200
-@@ -24,6 +24,6 @@
- AC_CHECK_FUNCS(gettimeofday mktime lseek64 llseek)
- AC_SUBST(LTLIBOBJS)
+ EXTRA_DIST = autogen.sh Doxyfile
+--- udftools-2.3/configure.ac.orig	2024-11-20 20:00:46.484506255 +0100
++++ udftools-2.3/configure.ac	2024-11-20 20:29:40.551778673 +0100
+@@ -41,6 +41,6 @@ AC_SUBST(LTLIBOBJS)
  
--AC_CONFIG_FILES(Makefile libudffs/Makefile mkudffs/Makefile cdrwtool/Makefile pktsetup/Makefile udffsck/Makefile wrudf/Makefile doc/Makefile)
-+AC_CONFIG_FILES(Makefile libudffs/Makefile mkudffs/Makefile cdrwtool/Makefile pktsetup/Makefile udffsck/Makefile wrudf/Makefile doc/Makefile include/Makefile)
+ AM_CONDITIONAL(USE_READLINE, test "$readline_found" = "yes")
+ 
+-AC_CONFIG_FILES(Makefile libudffs/Makefile mkudffs/Makefile cdrwtool/Makefile pktsetup/Makefile udffsck/Makefile udfinfo/Makefile udflabel/Makefile wrudf/Makefile doc/Makefile)
++AC_CONFIG_FILES(Makefile libudffs/Makefile mkudffs/Makefile cdrwtool/Makefile pktsetup/Makefile udffsck/Makefile udfinfo/Makefile udflabel/Makefile wrudf/Makefile doc/Makefile include/Makefile)
  
  AC_OUTPUT
---- udftools-1.2/cdrwtool/cdrwtool.h.orig	2016-06-29 19:13:05.000000000 +0200
-+++ udftools-1.2/cdrwtool/cdrwtool.h	2016-10-27 05:44:36.150086026 +0200
+--- udftools-2.3/cdrwtool/cdrwtool.h.orig	2024-11-20 20:00:46.487839570 +0100
++++ udftools-2.3/cdrwtool/cdrwtool.h	2024-11-20 20:30:28.708184454 +0100
 @@ -13,6 +13,7 @@
- #include <inttypes.h>
+ #include <stdint.h>
  #include <linux/cdrom.h>
  #include "../include/libudffs.h"
 +#include "../include/bswap.h"
  
  /*
   * define this to be the default cdrom device
---- udftools-1.2/mkudffs/file.h.orig	2016-06-29 19:13:05.000000000 +0200
-+++ udftools-1.2/mkudffs/file.h	2016-10-27 05:37:56.356757269 +0200
+--- udftools-2.3/mkudffs/file.h.orig	2024-11-20 20:00:46.487839570 +0100
++++ udftools-2.3/mkudffs/file.h	2024-11-20 20:31:11.884617214 +0100
 @@ -25,6 +25,7 @@
  #define __FILE_H
  
@@ -58,14 +61,44 @@
 +#include "bswap.h"
  
  tag query_tag(struct udf_disc *, struct udf_extent *, struct udf_desc *, uint16_t);
- extern tag udf_query_tag(struct udf_disc *, uint16_t, uint16_t, uint32_t, struct udf_data *, uint16_t);
---- udftools-1.2/wrudf/wrudf.c.orig	2016-06-29 19:13:05.000000000 +0200
-+++ udftools-1.2/wrudf/wrudf.c	2016-10-27 05:46:03.563418375 +0200
-@@ -10,6 +10,7 @@
- #include <string.h>
- #include <sys/resource.h>
+ extern tag udf_query_tag(struct udf_disc *, uint16_t, uint16_t, uint32_t, struct udf_data *, uint32_t, uint32_t);
+--- udftools-2.3/mkudffs/mkudffs.h.orig	2021-01-04 17:19:40.000000000 +0100
++++ udftools-2.3/mkudffs/mkudffs.h	2024-11-20 20:51:29.164689308 +0100
+@@ -27,6 +27,7 @@
+ #include "ecma_167.h"
+ #include "osta_udf.h"
+ #include "libudffs.h"
++#include "bswap.h"
  
-+#include "config.h"
- #include "wrudf.h"
+ #define UDF_ID_APPLICATION		"*Linux mkudffs " PACKAGE_VERSION
+ #define UDF_ID_DEVELOPER		"*Linux UDFFS"
+--- udftools-2.3/udfinfo/readdisc.c.orig	2021-01-04 17:19:48.000000000 +0100
++++ udftools-2.3/udfinfo/readdisc.c	2024-11-20 20:52:55.780886735 +0100
+@@ -32,6 +32,7 @@
+ #include <linux/cdrom.h>
+ #include <sys/ioctl.h>
  
- char	*devicename;			/* "/dev/cdrom" or disk image filename */
++#include "bswap.h"
+ #include "libudffs.h"
+ #include "readdisc.h"
+ 
+--- udftools-2.3/udfinfo/main.c.orig	2021-01-04 17:19:40.000000000 +0100
++++ udftools-2.3/udfinfo/main.c	2024-11-20 20:53:52.930577128 +0100
+@@ -34,6 +34,7 @@
+ #include <linux/fs.h>
+ #include <sys/ioctl.h>
+ 
++#include "bswap.h"
+ #include "libudffs.h"
+ #include "options.h"
+ #include "readdisc.h"
+--- udftools-2.3/udflabel/main.c.orig	2021-01-04 17:19:40.000000000 +0100
++++ udftools-2.3/udflabel/main.c	2024-11-20 21:06:40.713084360 +0100
+@@ -34,6 +34,7 @@
+ #include <linux/fs.h>
+ #include <sys/ioctl.h>
+ 
++#include "bswap.h"
+ #include "libudffs.h"
+ #include "options.h"
+ #include "../udfinfo/readdisc.h"
